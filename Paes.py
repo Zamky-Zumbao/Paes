@@ -1112,19 +1112,21 @@ def mostrar_resultados():
         resultado = calcular_puntaje_demre(asignatura, correctas, total)
         nivel = obtener_nivel_demre(resultado['puntaje_demre'])
         
-        st.markdown(f"""
-        <div style="background: linear-gradient(135deg, {nivel['color']}, {nivel['color']}dd); 
-                    color: white; padding: 2rem; border-radius: 15px; 
-                    text-align: center; margin: 1rem 0;">
-            <div style="font-size: 1.2rem; opacity: 0.9;">{nivel['icono']} {nivel['nivel']}</div>
-            <div style="font-size: 3rem; font-weight: 700; margin: 0.5rem 0;">
-                {resultado['puntaje_demre']}
-            </div>
-            <div style="font-size: 1rem; opacity: 0.9;">
-                Puntaje DEMRE estimado - {asignatura}
-            </div>
-            <div style="font-size: 0.9rem; opacity: 0.7; margin-top: 0.5rem;">
-                {correctas}/{total} correctas | {resultado['percentil_estimado']}% percentil
+        st.markdown("""
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h1 class="main-title">📚 Simulador PAES 2026</h1>
+            <p class="sub-title">Prepara tu futuro con la mejor herramienta de simulación</p>
+            
+            <div style="background: linear-gradient(135deg, #1a237e, #283593); 
+                        padding: 0.8rem 1.5rem; 
+                        border-radius: 15px; 
+                        margin: 1rem auto 1.5rem auto;
+                        max-width: 700px;
+                        box-shadow: 0 4px 16px rgba(26, 35, 126, 0.3);
+                        border: 2px solid #ff6f00;">
+                <p style="color: white; font-size: 1.2rem; font-weight: 700; margin: 0; letter-spacing: 1px;">
+                    🚀 Javier, tu futuro comienza aquí. ¡Dale con todo! 💪
+                </p>
             </div>
         </div>
         """, unsafe_allow_html=True)
