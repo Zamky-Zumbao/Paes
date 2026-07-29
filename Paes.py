@@ -552,7 +552,7 @@ def mostrar_login():
     <div style="text-align: center; color: #78909c; padding: 2rem 0; font-size: 0.9rem; border-top: 1px solid #e0e0e0; margin-top: 2rem;">
         <p>Simulador PAES 2026 © Todos los derechos reservados</p>
         <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
-            🚀 Desarrollado por <strong>Zamky_Zumbao</strong> | ❤️ Para Javier - ¡El futuro te espera! 💪
+            Desarrollado por <strong>Zamky_Zumbao</strong> 
         </p>
         <p style="font-size: 0.7rem; color: #b0bec5; margin-top: 0.3rem;">
             Versión 5.0.0 - PAES 2026
@@ -716,7 +716,7 @@ def mostrar_menu_principal():
     <div class="footer">
         <p>Simulador PAES 2026 © Todos los derechos reservados</p>
         <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
-            🚀 Desarrollado por <strong>Zamky_Zumbao</strong> | ❤️ Para Javier - ¡El futuro te espera! 💪
+            Desarrollado por <strong>Zamky_Zumbao</strong>
         </p>
         <p style="font-size: 0.7rem; color: #b0bec5; margin-top: 0.3rem;">
             Versión 5.0.0 - PAES 2026
@@ -842,7 +842,7 @@ def mostrar_seleccion_asignatura(tipo):
     <div class="footer">
         <p>Simulador PAES 2026 © Todos los derechos reservados</p>
         <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
-            🚀 Desarrollado por <strong>Zamky_Zumbao</strong> | ❤️ Para Javier - ¡El futuro te espera! 💪
+             Desarrollado por <strong>Zamky_Zumbao</strong>
         </p>
         <p style="font-size: 0.7rem; color: #b0bec5; margin-top: 0.3rem;">
             Versión 5.0.0 - PAES 2026
@@ -1192,7 +1192,7 @@ def mostrar_resultados():
     <div class="footer">
         <p>Simulador PAES 2026 © Todos los derechos reservados</p>
         <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
-            🚀 Desarrollado por <strong>Zamky_Zumbao</strong> | ❤️ Para Javier - ¡El futuro te espera! 💪
+            Desarrollado por <strong>Zamky_Zumbao</strong> 
         </p>
         <p style="font-size: 0.7rem; color: #b0bec5; margin-top: 0.3rem;">
             Versión 5.0.0 - PAES 2026
@@ -1253,7 +1253,7 @@ def mostrar_revision():
     <div class="footer">
         <p>Simulador PAES 2026 © Todos los derechos reservados</p>
         <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
-            🚀 Desarrollado por <strong>Zamky_Zumbao</strong> | ❤️ Para Javier - ¡El futuro te espera! 💪
+            Desarrollado por <strong>Zamky_Zumbao</strong>
         </p>
         <p style="font-size: 0.7rem; color: #b0bec5; margin-top: 0.3rem;">
             Versión 5.0.0 - PAES 2026
@@ -1350,7 +1350,7 @@ def mostrar_progreso():
     <div class="footer">
         <p>Simulador PAES 2026 © Todos los derechos reservados</p>
         <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
-            🚀 Desarrollado por <strong>Zamky_Zumbao</strong> | ❤️ Para Javier - ¡El futuro te espera! 💪
+            Desarrollado por <strong>Zamky_Zumbao</strong>
         </p>
         <p style="font-size: 0.7rem; color: #b0bec5; margin-top: 0.3rem;">
             Versión 5.0.0 - PAES 2026
@@ -1443,7 +1443,7 @@ def mostrar_carga_excel():
     <div class="footer">
         <p>Simulador PAES 2026 © Todos los derechos reservados</p>
         <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
-            🚀 Desarrollado por <strong>Zamky_Zumbao</strong> | ❤️ Para Javier - ¡El futuro te espera! 💪
+            Desarrollado por <strong>Zamky_Zumbao</strong>
         </p>
         <p style="font-size: 0.7rem; color: #b0bec5; margin-top: 0.3rem;">
             Versión 5.0.0 - PAES 2026
