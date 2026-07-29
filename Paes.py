@@ -1041,7 +1041,7 @@ def mostrar_simulacion():
     <div class="footer">
         <p>Simulador PAES 2026 © Todos los derechos reservados</p>
         <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
-            🚀 Desarrollado por <strong>Zamky_Zumbao</strong> | ❤️ Para Javier - ¡El futuro te espera! 💪
+            Desarrollado por <strong>Zamky_Zumbao</strong> 💪
         </p>
         <p style="font-size: 0.7rem; color: #b0bec5; margin-top: 0.3rem;">
             Versión 5.0.0 - PAES 2026
