@@ -1,7 +1,7 @@
 """
-SIMULADOR PAES PROFESIONAL - VERSIÓN COMPLETA 4.0
-Con todas las funciones: login, preguntas, cronómetro, resultados, progreso, carga de Excel, dashboard, metas y logros
-Diseño profesional con CSS mejorado
+SIMULADOR PAES PROFESIONAL - VERSIÓN 5.0 CON IA
+Con todas las funciones: login, preguntas, cronómetro, resultados, progreso, 
+carga de Excel, dashboard, metas, logros, notificaciones y ANÁLISIS CON IA
 """
 
 import streamlit as st
@@ -28,18 +28,15 @@ st.set_page_config(
 def load_css():
     """Carga estilos CSS mejorados desde archivo externo"""
     
-    # Font Awesome para iconos
     st.markdown("""
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     """, unsafe_allow_html=True)
     
-    # Intentar cargar desde archivo externo
     css_path = Path("assets/styles.css")
     if css_path.exists():
         with open(css_path, "r", encoding="utf-8") as f:
             st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
     else:
-        # Fallback: CSS básico
         st.markdown("""
         <style>
             .header-container {
@@ -178,7 +175,6 @@ def load_css():
         </style>
         """, unsafe_allow_html=True)
     
-    # Aplicar animación
     st.markdown("""
     <style>
         .stApp {
@@ -495,6 +491,19 @@ def mostrar_login():
     <div style="text-align: center; margin-bottom: 2rem;">
         <h1 class="main-title">📚 Simulador PAES 2026</h1>
         <p class="sub-title">Prepara tu futuro con la mejor herramienta de simulación</p>
+        
+        <!-- Mensaje para Javier -->
+        <div style="background: linear-gradient(135deg, #1a237e, #283593); 
+                    padding: 0.8rem 1.5rem; 
+                    border-radius: 15px; 
+                    margin: 1rem auto 1.5rem auto;
+                    max-width: 700px;
+                    box-shadow: 0 4px 16px rgba(26, 35, 126, 0.3);
+                    border: 2px solid #ff6f00;">
+            <p style="color: white; font-size: 1.2rem; font-weight: 700; margin: 0; letter-spacing: 1px;">
+                🚀 Javier, tu futuro comienza aquí. ¡Dale con todo! 💪
+            </p>
+        </div>
     </div>
     """, unsafe_allow_html=True)
     
@@ -567,22 +576,22 @@ def mostrar_login():
     st.markdown("""
     <div class="footer">
         <p>Simulador PAES 2026 © Todos los derechos reservados</p>
-        <p style="font-size: 0.8rem;">Versión 4.0.0</p>
+        <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
+            🚀 Desarrollado por <strong>Zamky_Zumbao</strong> | ❤️ Para Javier - ¡El futuro te espera! 💪
+        </p>
+        <p style="font-size: 0.7rem; color: #b0bec5; margin-top: 0.3rem;">
+            Versión 5.0.0 - PAES 2026
+        </p>
     </div>
     """, unsafe_allow_html=True)
 
 def mostrar_menu_principal():
     load_css()
     
-    # Mostrar notificaciones (módulo opcional)
     try:
         from notificaciones import mostrar_notificaciones
         mostrar_notificaciones()
-    except ImportError:
-        # El módulo no existe, continuar sin notificaciones
-        pass
-    except Exception as e:
-        # Otro error, continuar
+    except:
         pass
     
     st.markdown(f"""
@@ -594,6 +603,19 @@ def mostrar_menu_principal():
         <div class="header-user">
             <span><i class="fas fa-user"></i> {st.session_state.nombre_completo}</span>
         </div>
+    </div>
+    
+    <!-- Mensaje para Javier -->
+    <div style="background: linear-gradient(135deg, #1a237e, #283593); 
+                padding: 0.8rem 1.5rem; 
+                border-radius: 15px; 
+                margin: 1rem 0 1.5rem 0;
+                box-shadow: 0 4px 16px rgba(26, 35, 126, 0.3);
+                border: 2px solid #ff6f00;
+                text-align: center;">
+        <p style="color: white; font-size: 1.2rem; font-weight: 700; margin: 0; letter-spacing: 1px;">
+            🚀 Javier, tu futuro comienza aquí. ¡Dale con todo! 💪
+        </p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -656,8 +678,30 @@ def mostrar_menu_principal():
             st.rerun()
     
     with col3:
+        if st.button("🧠 Análisis con IA", use_container_width=True):
+            st.session_state.pagina_actual = "analisis_ia"
+            st.rerun()
+    
+    st.markdown("---")
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
         if st.button("📤 Cargar preguntas desde Excel", use_container_width=True):
             st.session_state.pagina_actual = "carga_excel"
+            st.rerun()
+    
+    with col2:
+        if st.button("📋 Ver todas las asignaturas", use_container_width=True):
+            asignaturas = obtener_asignaturas()
+            if asignaturas:
+                st.info("Asignaturas disponibles:\n" + "\n".join([f"• {a}" for a in asignaturas]))
+            else:
+                st.warning("No hay asignaturas cargadas")
+    
+    with col3:
+        if st.button("🔄 Reiniciar sesión", use_container_width=True):
+            for key in list(st.session_state.keys()):
+                del st.session_state[key]
             st.rerun()
     
     st.markdown("---")
@@ -693,6 +737,18 @@ def mostrar_menu_principal():
         conn.close()
     except Exception as e:
         pass
+    
+    st.markdown("""
+    <div class="footer">
+        <p>Simulador PAES 2026 © Todos los derechos reservados</p>
+        <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
+            🚀 Desarrollado por <strong>Zamky_Zumbao</strong> | ❤️ Para Javier - ¡El futuro te espera! 💪
+        </p>
+        <p style="font-size: 0.7rem; color: #b0bec5; margin-top: 0.3rem;">
+            Versión 5.0.0 - PAES 2026
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 def mostrar_seleccion_asignatura(tipo):
     load_css()
@@ -807,6 +863,18 @@ def mostrar_seleccion_asignatura(tipo):
     st.markdown("---")
     total_preguntas = contar_preguntas()
     st.info(f"📊 Total de preguntas disponibles: {total_preguntas}")
+    
+    st.markdown("""
+    <div class="footer">
+        <p>Simulador PAES 2026 © Todos los derechos reservados</p>
+        <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
+            🚀 Desarrollado por <strong>Zamky_Zumbao</strong> | ❤️ Para Javier - ¡El futuro te espera! 💪
+        </p>
+        <p style="font-size: 0.7rem; color: #b0bec5; margin-top: 0.3rem;">
+            Versión 5.0.0 - PAES 2026
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 def mostrar_simulacion():
     load_css()
@@ -993,6 +1061,18 @@ def mostrar_simulacion():
             if st.button("🗑️ Limpiar", use_container_width=True):
                 del st.session_state.respuestas_usuario[pregunta["id"]]
                 st.rerun()
+    
+    st.markdown("""
+    <div class="footer">
+        <p>Simulador PAES 2026 © Todos los derechos reservados</p>
+        <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
+            🚀 Desarrollado por <strong>Zamky_Zumbao</strong> | ❤️ Para Javier - ¡El futuro te espera! 💪
+        </p>
+        <p style="font-size: 0.7rem; color: #b0bec5; margin-top: 0.3rem;">
+            Versión 5.0.0 - PAES 2026
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 def mostrar_resultados():
     load_css()
@@ -1097,8 +1177,8 @@ def mostrar_resultados():
             st.session_state.simulacion_activa = False
             st.rerun()
     with col3:
-        if st.button("📊 Ver progreso", use_container_width=True):
-            st.session_state.pagina_actual = "progreso"
+        if st.button("🧠 Análisis con IA", use_container_width=True):
+            st.session_state.pagina_actual = "analisis_ia"
             st.rerun()
     
     if not st.session_state.modo_demo:
@@ -1132,6 +1212,18 @@ def mostrar_resultados():
             st.success("✅ Resultados guardados en tu historial")
         except Exception as e:
             st.warning("No se pudieron guardar los resultados")
+    
+    st.markdown("""
+    <div class="footer">
+        <p>Simulador PAES 2026 © Todos los derechos reservados</p>
+        <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
+            🚀 Desarrollado por <strong>Zamky_Zumbao</strong> | ❤️ Para Javier - ¡El futuro te espera! 💪
+        </p>
+        <p style="font-size: 0.7rem; color: #b0bec5; margin-top: 0.3rem;">
+            Versión 5.0.0 - PAES 2026
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 def mostrar_revision():
     load_css()
@@ -1181,6 +1273,18 @@ def mostrar_revision():
             
             if p.get("explicacion"):
                 st.info(f"💡 **Explicación:** {p['explicacion']}")
+    
+    st.markdown("""
+    <div class="footer">
+        <p>Simulador PAES 2026 © Todos los derechos reservados</p>
+        <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
+            🚀 Desarrollado por <strong>Zamky_Zumbao</strong> | ❤️ Para Javier - ¡El futuro te espera! 💪
+        </p>
+        <p style="font-size: 0.7rem; color: #b0bec5; margin-top: 0.3rem;">
+            Versión 5.0.0 - PAES 2026
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 def mostrar_progreso():
     load_css()
@@ -1266,6 +1370,18 @@ def mostrar_progreso():
         conn.close()
     except Exception as e:
         st.error(f"Error al cargar datos: {str(e)}")
+    
+    st.markdown("""
+    <div class="footer">
+        <p>Simulador PAES 2026 © Todos los derechos reservados</p>
+        <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
+            🚀 Desarrollado por <strong>Zamky_Zumbao</strong> | ❤️ Para Javier - ¡El futuro te espera! 💪
+        </p>
+        <p style="font-size: 0.7rem; color: #b0bec5; margin-top: 0.3rem;">
+            Versión 5.0.0 - PAES 2026
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 def mostrar_carga_excel():
     load_css()
@@ -1347,6 +1463,18 @@ def mostrar_carga_excel():
             
         except Exception as e:
             st.error(f"❌ Error al leer el archivo: {str(e)}")
+    
+    st.markdown("""
+    <div class="footer">
+        <p>Simulador PAES 2026 © Todos los derechos reservados</p>
+        <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
+            Desarrollado por <strong>Zamky_Zumbao</strong> 
+        </p>
+        <p style="font-size: 0.7rem; color: #b0bec5; margin-top: 0.3rem;">
+            Versión 5.0.0 - PAES 2026
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 def cargar_preguntas_excel(df, limpiar=False):
     conn = sqlite3.connect("simulador_paes.db")
@@ -1435,6 +1563,21 @@ def mostrar_metas():
             st.session_state.pagina_actual = "inicio"
             st.rerun()
 
+def mostrar_analisis_ia():
+    try:
+        from analisis_ia import mostrar_analisis_ia as ia_func
+        ia_func()
+    except ImportError:
+        st.info("🧠 Sistema de análisis con IA en desarrollo. Próximamente disponible.")
+        if st.button("← Volver al menú principal"):
+            st.session_state.pagina_actual = "inicio"
+            st.rerun()
+    except Exception as e:
+        st.error(f"Error al cargar el análisis: {str(e)}")
+        if st.button("← Volver al menú principal"):
+            st.session_state.pagina_actual = "inicio"
+            st.rerun()
+
 def init_session_state():
     defaults = {
         'logged_in': False,
@@ -1506,6 +1649,8 @@ def main():
             mostrar_dashboard()
         elif pagina == "metas":
             mostrar_metas()
+        elif pagina == "analisis_ia":
+            mostrar_analisis_ia()
         else:
             mostrar_menu_principal()
 
