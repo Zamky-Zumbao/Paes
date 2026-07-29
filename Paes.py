@@ -26,7 +26,7 @@ st.set_page_config(
 
 # ============ ESTILOS CSS MEJORADOS ============
 def load_css():
-    """Carga estilos CSS mejorados desde archivo externo"""
+    """Carga estilos CSS mejorados"""
     
     st.markdown("""
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -148,25 +148,6 @@ def load_css():
                 border-top: 1px solid #e0e0e0;
                 margin-top: 2rem;
             }
-            .logro-card {
-                background: linear-gradient(135deg, #1a237e, #283593);
-                color: white;
-                padding: 1rem;
-                border-radius: 12px;
-                text-align: center;
-                margin: 0.5rem 0;
-                border: 2px solid #ffd700;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            }
-            .logro-bloqueado {
-                background: #f5f5f5;
-                padding: 1rem;
-                border-radius: 12px;
-                text-align: center;
-                margin: 0.5rem 0;
-                opacity: 0.6;
-                border: 1px dashed #999;
-            }
             @media (max-width: 768px) {
                 .header-title { font-size: 1.2rem; }
                 .header-container { flex-direction: column; gap: 0.5rem; }
@@ -174,18 +155,6 @@ def load_css():
             }
         </style>
         """, unsafe_allow_html=True)
-    
-    st.markdown("""
-    <style>
-        .stApp {
-            animation: fadeIn 0.5s ease forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
-    """, unsafe_allow_html=True)
 
 # ============ BASE DE DATOS ============
 def init_database():
@@ -487,94 +456,100 @@ class Cronometro:
 def mostrar_login():
     load_css()
     
-    st.markdown(f"""
-    <div style="text-align: center; margin-bottom: 2rem;">
-        <h1 class="main-title">📚 Simulador PAES 2026</h1>
-        <p class="sub-title">Prepara tu futuro con la mejor herramienta de simulación</p>
-        
-        <!-- Mensaje para Javier -->
-        <div style="background: linear-gradient(135deg, #1a237e, #283593); 
-                    padding: 0.8rem 1.5rem; 
-                    border-radius: 15px; 
-                    margin: 1rem auto 1.5rem auto;
-                    max-width: 700px;
-                    box-shadow: 0 4px 16px rgba(26, 35, 126, 0.3);
-                    border: 2px solid #ff6f00;">
-            <p style="color: white; font-size: 1.2rem; font-weight: 700; margin: 0; letter-spacing: 1px;">
-                🚀 Javier, tu futuro comienza aquí. ¡Dale con todo! 💪
-            </p>
-        </div>
+    # Título
+    st.markdown("""
+    <div style="text-align: center; margin-bottom: 1rem;">
+        <h1 style="font-size: 2.8rem; font-weight: 700; color: #1a237e; margin: 0;">📚 Simulador PAES 2026</h1>
+        <p style="font-size: 1.1rem; color: #455a64; margin-top: 0.2rem;">Prepara tu futuro con la mejor herramienta de simulación</p>
     </div>
     """, unsafe_allow_html=True)
     
-    with st.container():
-        st.markdown('<div class="login-container">', unsafe_allow_html=True)
-        
-        st.markdown('<h2 class="login-title">🔐 Iniciar Sesión</h2>', unsafe_allow_html=True)
-        st.markdown('<p class="login-subtitle">Accede a tu cuenta para comenzar</p>', unsafe_allow_html=True)
-        
-        tab1, tab2 = st.tabs(["Iniciar Sesión", "Registrarse"])
-        
-        with tab1:
-            with st.form("login_form"):
-                username = st.text_input("Usuario", placeholder="Ingresa tu usuario")
-                password = st.text_input("Contraseña", type="password", placeholder="Ingresa tu contraseña")
-                
-                col1, col2 = st.columns([1, 1])
-                with col1:
-                    submit_login = st.form_submit_button("Ingresar", use_container_width=True)
-                
-                with col2:
-                    demo_clicked = st.form_submit_button("Modo Demo", use_container_width=True)
-                
-                if submit_login:
-                    if username and password:
-                        user = verificar_login(username, password)
-                        if user:
-                            st.session_state.logged_in = True
-                            st.session_state.user_id = user[0]
-                            st.session_state.username = user[1]
-                            st.session_state.nombre_completo = user[2]
-                            actualizar_ultimo_acceso(user[0])
-                            st.rerun()
-                        else:
-                            st.error("❌ Usuario o contraseña incorrectos")
-                    else:
-                        st.warning("⚠️ Por favor completa todos los campos")
-                
-                if demo_clicked:
-                    st.session_state.logged_in = True
-                    st.session_state.user_id = 999
-                    st.session_state.username = "demo"
-                    st.session_state.nombre_completo = "Usuario Demo"
-                    st.session_state.modo_demo = True
-                    st.rerun()
-        
-        with tab2:
-            with st.form("register_form"):
-                reg_username = st.text_input("Usuario", placeholder="Elige un nombre de usuario")
-                reg_password = st.text_input("Contraseña", type="password", placeholder="Crea una contraseña segura")
-                reg_email = st.text_input("Email", placeholder="tu@email.com")
-                reg_nombre = st.text_input("Nombre completo", placeholder="Tu nombre completo")
-                
-                submit_register = st.form_submit_button("Registrarse", use_container_width=True)
-                
-                if submit_register:
-                    if all([reg_username, reg_password, reg_email, reg_nombre]):
-                        if len(reg_password) >= 6:
-                            if registrar_usuario(reg_username, reg_password, reg_email, reg_nombre):
-                                st.success("✅ ¡Registro exitoso! Ahora inicia sesión")
-                            else:
-                                st.error("❌ El usuario ya existe")
-                        else:
-                            st.warning("⚠️ La contraseña debe tener al menos 6 caracteres")
-                    else:
-                        st.warning("⚠️ Por favor completa todos los campos")
-        
-        st.markdown('</div>', unsafe_allow_html=True)
-    
+    # Mensaje para Javier
     st.markdown("""
-    <div class="footer">
+    <div style="background: linear-gradient(135deg, #1a237e, #283593); 
+                padding: 0.8rem 1.5rem; 
+                border-radius: 15px; 
+                margin: 0 auto 1.5rem auto;
+                max-width: 650px;
+                box-shadow: 0 4px 16px rgba(26, 35, 126, 0.3);
+                border: 2px solid #ff6f00;
+                text-align: center;">
+        <p style="color: white; font-size: 1.1rem; font-weight: 600; margin: 0;">
+            🚀 Javier, tu futuro comienza aquí. ¡Dale con todo! 💪
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Login container
+    st.markdown("""
+    <div style="max-width: 450px; margin: 0 auto; padding: 2rem; background: white; border-radius: 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+        <h2 style="font-size: 2rem; font-weight: 700; color: #1a237e; text-align: center; margin-bottom: 0.5rem;">🔐 Iniciar Sesión</h2>
+        <p style="text-align: center; color: #78909c; margin-bottom: 2rem;">Accede a tu cuenta para comenzar</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Tabs usando Streamlit nativo
+    tab1, tab2 = st.tabs(["Iniciar Sesión", "Registrarse"])
+    
+    with tab1:
+        with st.form("login_form"):
+            username = st.text_input("Usuario", placeholder="Ingresa tu usuario")
+            password = st.text_input("Contraseña", type="password", placeholder="Ingresa tu contraseña")
+            
+            col1, col2 = st.columns([1, 1])
+            with col1:
+                submit_login = st.form_submit_button("Ingresar", use_container_width=True)
+            
+            with col2:
+                demo_clicked = st.form_submit_button("Modo Demo", use_container_width=True)
+            
+            if submit_login:
+                if username and password:
+                    user = verificar_login(username, password)
+                    if user:
+                        st.session_state.logged_in = True
+                        st.session_state.user_id = user[0]
+                        st.session_state.username = user[1]
+                        st.session_state.nombre_completo = user[2]
+                        actualizar_ultimo_acceso(user[0])
+                        st.rerun()
+                    else:
+                        st.error("❌ Usuario o contraseña incorrectos")
+                else:
+                    st.warning("⚠️ Por favor completa todos los campos")
+            
+            if demo_clicked:
+                st.session_state.logged_in = True
+                st.session_state.user_id = 999
+                st.session_state.username = "demo"
+                st.session_state.nombre_completo = "Usuario Demo"
+                st.session_state.modo_demo = True
+                st.rerun()
+    
+    with tab2:
+        with st.form("register_form"):
+            reg_username = st.text_input("Usuario", placeholder="Elige un nombre de usuario")
+            reg_password = st.text_input("Contraseña", type="password", placeholder="Crea una contraseña segura")
+            reg_email = st.text_input("Email", placeholder="tu@email.com")
+            reg_nombre = st.text_input("Nombre completo", placeholder="Tu nombre completo")
+            
+            submit_register = st.form_submit_button("Registrarse", use_container_width=True)
+            
+            if submit_register:
+                if all([reg_username, reg_password, reg_email, reg_nombre]):
+                    if len(reg_password) >= 6:
+                        if registrar_usuario(reg_username, reg_password, reg_email, reg_nombre):
+                            st.success("✅ ¡Registro exitoso! Ahora inicia sesión")
+                        else:
+                            st.error("❌ El usuario ya existe")
+                    else:
+                        st.warning("⚠️ La contraseña debe tener al menos 6 caracteres")
+                else:
+                    st.warning("⚠️ Por favor completa todos los campos")
+    
+    # Footer
+    st.markdown("""
+    <div style="text-align: center; color: #78909c; padding: 2rem 0; font-size: 0.9rem; border-top: 1px solid #e0e0e0; margin-top: 2rem;">
         <p>Simulador PAES 2026 © Todos los derechos reservados</p>
         <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
             🚀 Desarrollado por <strong>Zamky_Zumbao</strong> | ❤️ Para Javier - ¡El futuro te espera! 💪
@@ -605,7 +580,6 @@ def mostrar_menu_principal():
         </div>
     </div>
     
-    <!-- Mensaje para Javier -->
     <div style="background: linear-gradient(135deg, #1a237e, #283593); 
                 padding: 0.8rem 1.5rem; 
                 border-radius: 15px; 
@@ -613,7 +587,7 @@ def mostrar_menu_principal():
                 box-shadow: 0 4px 16px rgba(26, 35, 126, 0.3);
                 border: 2px solid #ff6f00;
                 text-align: center;">
-        <p style="color: white; font-size: 1.2rem; font-weight: 700; margin: 0; letter-spacing: 1px;">
+        <p style="color: white; font-size: 1.1rem; font-weight: 600; margin: 0;">
             🚀 Javier, tu futuro comienza aquí. ¡Dale con todo! 💪
         </p>
     </div>
@@ -876,6 +850,7 @@ def mostrar_seleccion_asignatura(tipo):
     </div>
     """, unsafe_allow_html=True)
 
+# ============ FUNCIONES RESTANTES ============
 def mostrar_simulacion():
     load_css()
     
@@ -1112,21 +1087,19 @@ def mostrar_resultados():
         resultado = calcular_puntaje_demre(asignatura, correctas, total)
         nivel = obtener_nivel_demre(resultado['puntaje_demre'])
         
-        st.markdown("""
-        <div style="text-align: center; margin-bottom: 2rem;">
-            <h1 class="main-title">📚 Simulador PAES 2026</h1>
-            <p class="sub-title">Prepara tu futuro con la mejor herramienta de simulación</p>
-            
-            <div style="background: linear-gradient(135deg, #1a237e, #283593); 
-                        padding: 0.8rem 1.5rem; 
-                        border-radius: 15px; 
-                        margin: 1rem auto 1.5rem auto;
-                        max-width: 700px;
-                        box-shadow: 0 4px 16px rgba(26, 35, 126, 0.3);
-                        border: 2px solid #ff6f00;">
-                <p style="color: white; font-size: 1.2rem; font-weight: 700; margin: 0; letter-spacing: 1px;">
-                    🚀 Javier, tu futuro comienza aquí. ¡Dale con todo! 💪
-                </p>
+        st.markdown(f"""
+        <div style="background: linear-gradient(135deg, {nivel['color']}, {nivel['color']}dd); 
+                    color: white; padding: 2rem; border-radius: 15px; 
+                    text-align: center; margin: 1rem 0;">
+            <div style="font-size: 1.2rem; opacity: 0.9;">{nivel['icono']} {nivel['nivel']}</div>
+            <div style="font-size: 3rem; font-weight: 700; margin: 0.5rem 0;">
+                {resultado['puntaje_demre']}
+            </div>
+            <div style="font-size: 1rem; opacity: 0.9;">
+                Puntaje DEMRE estimado - {asignatura}
+            </div>
+            <div style="font-size: 0.9rem; opacity: 0.7; margin-top: 0.5rem;">
+                {correctas}/{total} correctas | {resultado['percentil_estimado']}% percentil
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1470,7 +1443,7 @@ def mostrar_carga_excel():
     <div class="footer">
         <p>Simulador PAES 2026 © Todos los derechos reservados</p>
         <p style="font-size: 0.9rem; color: #1a237e; font-weight: 600;">
-            Desarrollado por <strong>Zamky_Zumbao</strong> 
+            🚀 Desarrollado por <strong>Zamky_Zumbao</strong> | ❤️ Para Javier - ¡El futuro te espera! 💪
         </p>
         <p style="font-size: 0.7rem; color: #b0bec5; margin-top: 0.3rem;">
             Versión 5.0.0 - PAES 2026
